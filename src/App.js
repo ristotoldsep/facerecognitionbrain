@@ -26,11 +26,8 @@ const particlesOptions = {
     }
   }
 }
-
-class App extends Component {
-  constructor() { //Creating state
-    super(); // To be able to use 'this'
-    this.state = {
+//Creating initial state for the app
+const initialState = {
       input: '',
       imageUrl: '',
       box: {},
@@ -43,7 +40,12 @@ class App extends Component {
         entries: 0, //How many images has entered
         joined: '' //To track joining date
       }
-    }
+}
+
+class App extends Component {
+  constructor() { //Creating state
+    super(); // To be able to use 'this'
+    this.state = initialState;
   }
 
   loadUser = (data) => {
@@ -105,6 +107,7 @@ class App extends Component {
         .then(count => {
           this.setState(Object.assign(this.state.user, { entries: count}))
         })
+        .catch(console.log)
       }
       this.displayFaceBox(this.calculateFaceLocation(response))
     })
@@ -113,7 +116,7 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if(route === 'signout') {
-      this.setState({isSignedIn: false})
+      this.setState(initialState) //If user signed out, initialize the app state
     } else if(route === 'home') {
       this.setState({isSignedIn: true})
     }
