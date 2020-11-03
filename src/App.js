@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 import Navigation from './components/navigation/Navigation';
 import SignIn from './components/signin/SignIn';
 import Register from './components/register/Register';
@@ -9,10 +8,6 @@ import Rank from './components/rank/Rank';
 import ImageLinkForm from './components/imagelinkform/ImageLinkForm';
 import FaceRecognition from './components/facerecognition/FaceRecognition';
 import './App.css';
-
-const app = new Clarifai.App({
-  apiKey: '32d66d5ba7d448b1ba43c4b8941fcff5'
-});
 
 const particlesOptions = {
   particles: {
@@ -92,8 +87,14 @@ class App extends Component {
   //HERE I CAN CHANGE MODEL ID
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    app.models
-    .predict('c0c0ac362b03416da06ab3fa36fb58e3', this.state.input)
+      fetch("http://localhost:3000/imageurl", { //this will call image route and increment entries!
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
+    .then(response => response.json())
     .then(response => {
       if(response) {
         fetch("http://localhost:3000/image", { //this will call image route and increment entries!
