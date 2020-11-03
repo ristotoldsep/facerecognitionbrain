@@ -87,7 +87,7 @@ class App extends Component {
   //HERE I CAN CHANGE MODEL ID
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-      fetch("http://localhost:3000/imageurl", { //this will call image route and increment entries!
+    fetch("https://smartbrain-ristotoldsep.herokuapp.com/imageurl", { //this will call image route and increment entries!
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -97,7 +97,7 @@ class App extends Component {
     .then(response => response.json())
     .then(response => {
       if(response) {
-        fetch("http://localhost:3000/image", { //this will call image route and increment entries!
+        fetch("https://smartbrain-ristotoldsep.herokuapp.com/image", { //this will call image route and increment entries!
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
